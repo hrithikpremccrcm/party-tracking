@@ -1,17 +1,12 @@
-# Use official Java image
-FROM eclipse-temurin:21-jdk-alpine
+# Use Maven + JDK image to build
+FROM maven:3.9.6-eclipse-temurin-21-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy pom and source
 COPY . .
 
-# Build application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Expose port
 EXPOSE 8080
 
-# Run app
 CMD ["java", "-jar", "target/party-tracker-1.0.0.jar"]
